@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+}
+
+group 'com.splunk'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 10
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+ext {
+    // Note that this is a prototype version at
+    // https://github.com/open-telemetry/opentelemetry-java/compare/master...zenmoto:PROTO_ot_logging_2020_04
+    otVersion = "0.5.0p-SNAPSHOT"
+}
+
+dependencies {
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
+    implementation("io.opentelemetry:opentelemetry-api:${otVersion}")
+    implementation("io.opentelemetry:opentelemetry-sdk:$otVersion")
+    implementation("io.opentelemetry:opentelemetry-exporters-logging:$otVersion")
+    implementation("io.opentelemetry:opentelemetry-exporters-jaeger:$otVersion")
+    implementation("io.opentelemetry:opentelemetry-exporters-fluent:$otVersion")
+    implementation group: 'io.grpc', name: 'grpc-all', version: '1.28.0'
+}

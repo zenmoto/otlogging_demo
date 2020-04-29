@@ -1,0 +1,9 @@
+<configuration>
+
+    <appender name="fluentd" class="io.opentelemetry.prototype.logging.LogbackAppender">
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="fluentd" />
+    </root>
+</configuration>

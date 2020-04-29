@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="com.splunk.thundercat">
+    <Appenders>
+        <OTFluentd name="fluentd"></OTFluentd>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="fluentd"/>
+        </Root>
+    </Loggers>
+</Configuration>

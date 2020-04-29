@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  splunk:
+    image: splunk/splunk:8.0.2.1-debian
+    ports:
+      - "8000:8000"
+    volumes:
+      - type: bind
+        source: ./splunk
+        target: /tmp/splunk-settings/
+    environment:
+      SPLUNK_START_ARGS: --accept-license
+      SPLUNK_PASSWORD: betelgeuse
+      SPLUNK_DEFAULTS_URL: /tmp/splunk-settings/defaults.yml
+    healthcheck:
+      test: "while [[ -z $$(curl http://localhost:8089/services/server/info) ]]; do sleep 5; done"
+      interval: 10s
+      timeout: 3m
+  jaeger:
+    image: jaegertracing/all-in-one
+    ports:
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+      - "9411:9411"
+  fluent-bit:
+    image: fluent/fluent-bit
+    command: /fluent-bit/bin/fluent-bit -c /fluent-bit-config/fluent-bit.conf -v
+    ports:
+      - "24224:24224"
+    links:
+      - "splunk"
+    depends_on:
+      - splunk
+    volumes:
+      - type: bind
+        source: ./fluent-bit
+        target: /fluent-bit-config

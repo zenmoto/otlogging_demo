@@ -1,0 +1,5 @@
+splunk:
+  hec_port: 8088
+  hec_disabled: 0
+  hec_enableSSL: 0
+  hec_token: jankyjeepers
